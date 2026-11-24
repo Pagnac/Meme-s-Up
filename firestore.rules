@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Salons de jeu entre amis : lisible/écrivable par tout client possédant le code.
+    // (Le code du salon sert de "secret". Pour un jeu 100% anti-triche sur les mots,
+    //  déplacer la logique côté Cloud Functions.)
+    match /rooms/{code} {
+      allow read, write: if true;
+    }
+  }
+}
